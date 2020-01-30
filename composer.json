@@ -1,0 +1,20 @@
+{
+    "name": "sozodesign/magento2-module-logviewer",
+    "description": "Preview and download log files from Magento admin",
+    "type": "magento2-module",
+    "license": "open-source",
+    "authors": [
+        {
+            "email": "info@sozodesign.co.uk",
+            "name": "Sozo Design"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "PhilTurner\\LogViewer\\": ""
+        }
+    }
+}
