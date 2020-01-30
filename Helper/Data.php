@@ -1,9 +1,11 @@
 <?php
 namespace PhilTurner\LogViewer\Helper;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Store\Model\ScopeInterface;
 
 class Data extends AbstractHelper
 {
@@ -11,11 +13,16 @@ class Data extends AbstractHelper
      * @var DirectoryList
      */
     protected $directoryList;
+    protected $scopeConfig;
+    const XML_PATH_LINES = 'dev/logviewer/files';
 
     public function __construct(
+        ScopeConfigInterface $scopeConfig,
+
         Context $context,
         DirectoryList $directoryList
     ) {
+        $this->scopeConfig = $scopeConfig;
         $this->directoryList = $directoryList;
         parent::__construct(
             $context
@@ -65,7 +72,11 @@ class Data extends AbstractHelper
      */
     public function buildLogData()
     {
-        $maxNumOfLogs = 30;
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        $maxNumOfLogs = $this->scopeConfig->getValue(self::XML_PATH_LINES, $storeScope);
+        if ($maxNumOfLogs == 0) {
+            $maxNumOfLogs = 20;
+        }
         $logFileData = [];
         $path = $this->getPath();
         $files = $this->getLogFiles();
@@ -97,6 +108,6 @@ class Data extends AbstractHelper
         $path = $this->getPath();
         $fullPath = $path . $fileName;
         exec('tail -'. $numOfLines . ' ' . $fullPath, $output);
-        return implode($output);
+        return implode("\n", $output);
     }
 }

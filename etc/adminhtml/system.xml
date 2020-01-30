@@ -2,11 +2,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="dev">
-            <group id="logviewer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="999" translate="label">
+            <group id="logviewer" showInDefault="1" sortOrder="999" translate="label">
                 <label>Log Viewer</label>
-                <field id="lines" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+                <field id="lines" showInDefault="1"  sortOrder="10" translate="label" type="text">
                     <label>Lines to show in preview</label>
-                    <comment>How many lines to show in a log file preview</comment>
+                    <comment>How many lines to show in a log file preview, for example 50</comment>
+                </field>
+                <field id="files" showInDefault="1" sortOrder="20" translate="label" type="text">
+                    <label>Maximum log files to show</label>
+                    <comment>For example 30</comment>
                 </field>
             </group>
         </section>

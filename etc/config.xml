@@ -4,6 +4,8 @@
         <dev>
             <logviewer>
                 <lines>50</lines>
+                <files>30</files>
             </logviewer>
+        </dev>
     </default>
 </config>

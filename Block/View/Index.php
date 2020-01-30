@@ -3,6 +3,7 @@ namespace PhilTurner\LogViewer\Block\View;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Store\Model\ScopeInterface;
 use PhilTurner\LogViewer\Helper\Data;
 
 class Index extends \Magento\Framework\View\Element\Template
@@ -38,13 +39,16 @@ class Index extends \Magento\Framework\View\Element\Template
      */
     public function getLogFile()
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $storeScope = ScopeInterface::SCOPE_STORE;
         $lines = $this->scopeConfig->getValue(self::XML_PATH_LINES, $storeScope);
         if ($lines == 0) {
-            $lines = 20;
+            $lines = 50;
         }
         $params = $this->_request->getParams();
-        return $this->logDataHelper->getLastLinesOfFile($params[0], $lines);
+        $tail =  $this->logDataHelper->getLastLinesOfFile($params[0], $lines);
+        $html =  str_replace(['\r\n', '\r', '\n'], "<br>", htmlspecialchars($tail));
+        return $html;
+
     }
 
     /**
